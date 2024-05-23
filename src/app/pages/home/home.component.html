@@ -1,0 +1,57 @@
+<div class="grid place-items-center h-screen">
+  <div class="flex flex-col items-center justify-center w-full">
+    <h1 class="text-3xl font-bold mb-4">List Task</h1>
+    <div class="grid grid-cols-3 gap-4 items-center">
+      <ul class="flex space-x-4">
+        <li>
+          <a href="#" class="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300" (click)="changeFilter('all')">All</a>
+        </li>
+        <li>
+          <a href="#" class="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300" (click)="changeFilter('high')">High</a>
+        </li>
+        <li>
+          <a href="#" class="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300" (click)="changeFilter('half')">Half</a>
+        </li>
+        <li>
+          <a href="#" class="px-4 py-2 rounded-md bg-gray-200 hover:bg-gray-300" (click)="changeFilter('low')">Low</a>
+        </li>
+      </ul>
+      <button id="addTaskBtn" class="col-span-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4" (click)="goToFormTask()">Add Task</button>
+      <div class=" b-4">
+        <h1 class="text-2xl font-semibold mb-2">Notifications</h1>
+        <select id="priorityFilter" class="bg-white border border-gray-300 rounded-md shadow-sm px-4 py-2 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm mb-4">
+          <option value="high">One hour</option>
+          <option value="half">One day</option>
+          <option value="low">One Week</option>
+        </select>
+      </div>
+    </div>
+    <ul class="bg-white shadow overflow-hidden sm:rounded-md max-w-sm w-full">
+      @for (item of taskList; track 'idTask') {
+        <li>
+          <div class="px-4 py-5 sm:px-6">
+            <div class="grid grid-cols-4 gap-4">
+              <div class="col-span-1 flex items-center justify-center">
+                <input type="checkbox" class="form-checkbox h-5 w-5 text-indigo-600" (change)="updateState(item.idTask, item.status)" [checked]="item.status === status">
+              </div>
+              <div class="col-span-3">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-lg leading-6 font-medium text-gray-900">{{ item.title }}</h3>
+                  <div class="flex">
+                    <button class="text-indigo-600 hover:text-indigo-900 mr-2" (click)="goToUpdateTask(item.idTask)">Edit</button>
+                    <button class="text-red-600 hover:text-red-900" (click)="DeleteTask(item.idTask)">Delete</button>
+                  </div>
+                </div>
+                <p class="mt-1 max-w-2xl text-sm text-gray-500">{{ item.description }}</p>
+                <div class="mt-4">
+                  <p class="text-sm font-medium text-gray-500">Importance: <span class="text-green-600">{{ getImportanceLabel(item.importance) }}</span></p>
+                  <p class="text-sm font-medium text-gray-500">Expired date: <span>{{ item.expirationDate| date: 'shortDate' }}</span></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+</div>
